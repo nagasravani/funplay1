@@ -63,7 +63,7 @@ def main():
             options = question["options"]
             user_answer = st.radio("Select your answer:", options, key=f"q{player_state['current_question']}")
 
-            if st.button("Submit", key=f"submit{player_state['current_question']}"):
+            if st.button("Next", key=f"next{player_state['current_question']}"):
                 if user_answer == question["answer"]:
                     st.success("Correct!")
                     player_state["score"] += 1
