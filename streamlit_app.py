@@ -23,6 +23,9 @@ random.shuffle(questions)
 if "players" not in st.session_state:
     st.session_state.players = {}
 
+if "submitted_answers" not in st.session_state:
+    st.session_state.submitted_answers = {}
+
 # Main function to run the game
 def main():
     # Initialize player session
@@ -61,16 +64,28 @@ def main():
             st.write(f"**Question {player_state['current_question'] + 1}:** {question['question']}")
 
             options = question["options"]
-            user_answer = st.radio("Select your answer:", options, key=f"q{player_state['current_question']}")
+
+            selected_option = st.radio(
+                "Select your answer:",
+                options,
+                key=f"q{player_state['current_question']}",
+                index=-1
+            )
+
+            if st.button("Submit", key=f"submit{player_state['current_question']}"):
+                if player_state["current_question"] not in st.session_state.submitted_answers:
+                    st.session_state.submitted_answers[player_state["current_question"]] = selected_option
+                    if selected_option == question["answer"]:
+                        st.success("Correct!")
+                        player_state["score"] += 1
+                    else:
+                        st.error(f"Wrong! The correct answer is: {question['answer']}")
 
             if st.button("Next", key=f"next{player_state['current_question']}"):
-                if user_answer == question["answer"]:
-                    st.success("Correct!")
-                    player_state["score"] += 1
+                if player_state["current_question"] not in st.session_state.submitted_answers:
+                    st.warning("Please submit your answer before proceeding.")
                 else:
-                    st.error(f"Wrong! The correct answer is: {question['answer']}")
-
-                player_state["current_question"] += 1
+                    player_state["current_question"] += 1
         else:
             st.write(f"### Game Over! {player_id}, your final score is: {player_state['score']}/{len(questions)} 🎉")
             if player_state['score'] == len(questions):
@@ -89,6 +104,7 @@ def main():
                     "current_question": 0,
                     "start_time": time.time(),
                 }
+                st.session_state.submitted_answers.clear()
 
 if __name__ == "__main__":
     main()
