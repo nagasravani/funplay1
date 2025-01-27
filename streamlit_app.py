@@ -27,7 +27,7 @@ def main():
     if 'score' not in st.session_state:
         st.session_state.score = 0
     if 'time_left' not in st.session_state:
-        st.session_state.time_left = 60
+        st.session_state.time_left = 360
     if 'answered' not in st.session_state:
         st.session_state.answered = False
     
