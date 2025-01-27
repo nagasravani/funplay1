@@ -15,7 +15,6 @@ questions = [
     {"question": "IDA stands for", "options": ["Interesting Document Analysis", "Intelligent Document Automation", "Inverse Document Analysis", "Intelligent Diverse Automation"], "answer": "Intelligent Document Automation"},
     {"question": "DISA stands for", "options": ["Dormant Intelligence Switch Architecture", "Device Intelligence Service Architecture", "Document Intelligence Solution Architecture", "Document Intelligence Solution Analysis"], "answer": "Document Intelligence Solution Architecture"},
 ]
-
 # Shuffle questions to add variety
 random.shuffle(questions)
 
@@ -69,7 +68,7 @@ def main():
                 "Select your answer:",
                 options,
                 key=f"q{player_state['current_question']}",
-                index=-1
+                index=0
             )
 
             if st.button("Submit", key=f"submit{player_state['current_question']}"):
