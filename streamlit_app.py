@@ -4,16 +4,16 @@ import time
 
 # Questions and answers
 questions = [
-{"question": "What is the capital of France?", "options": ["Paris", "London", "Rome", "Madrid"], "answer": "Paris"},
-    {"question": "Which planet is known as the Red Planet?", "options": ["Earth", "Mars", "Jupiter", "Saturn"], "answer": "Mars"},
-    {"question": "Who wrote 'Hamlet'?", "options": ["Charles Dickens", "J.K. Rowling", "William Shakespeare", "Jane Austen"], "answer": "William Shakespeare"},
-    {"question": "What is the largest ocean on Earth?", "options": ["Atlantic Ocean", "Indian Ocean", "Arctic Ocean", "Pacific Ocean"], "answer": "Pacific Ocean"},
-    {"question": "What is the chemical symbol for water?", "options": ["H2O", "O2", "CO2", "N2"], "answer": "H2O"},
-    {"question": "How many continents are there?", "options": ["5", "6", "7", "8"], "answer": "7"},
-    {"question": "Which country invented pizza?", "options": ["France", "Italy", "USA", "Greece"], "answer": "Italy"},
-    {"question": "Who painted the Mona Lisa?", "options": ["Vincent Van Gogh", "Pablo Picasso", "Leonardo da Vinci", "Michelangelo"], "answer": "Leonardo da Vinci"},
-    {"question": "What is the largest mammal?", "options": ["Elephant", "Whale Shark", "Blue Whale", "Giraffe"], "answer": "Blue Whale"},
-    {"question": "What is the square root of 64?", "options": ["6", "8", "10", "12"], "answer": "8"},
+    {"question": "URL stands for", "options": ["Unit Resource Load", "Uniform Read Locator", "Uniform Resource Locator", "Unit Resource Locator"], "answer": "Uniform Resource Locator"},
+    {"question": "IVR stands for", "options": ["Interest Voice Record", "Interactive Voice Response", "Interactive Voice Record", "Interesting Voice Report"], "answer": "Interactive Voice Response"},
+    {"question": "POD stands for", "options": ["Product Oriented Delivery", "Product Oriented Department", "Primary Oriented Device", "Product Oriented Development"], "answer": "Product Oriented Delivery"},
+    {"question": "RCA stands for", "options": ["Route Cause Anomaly", "Random Care Analysis", "Root Cause Analysis", "Random Cause Analysis"], "answer": "Root Cause Analysis"},
+    {"question": "MVP stands for", "options": ["Minimum Viable Product", "Maximum Viable Product", "Minimum Visible Product", "Minimum Variable Price"], "answer": "Minimum Viable Product"},
+    {"question": "PDI stands for", "options": ["Price Demand Id", "Product Demand Ideas", "Product Diverse Ideas", "Product Discovery Ideas"], "answer": "Product Discovery Ideas"},
+    {"question": "KPI stands for", "options": ["Key Program Indicator", "Key Progress Indicator", "Key Performance Indicator", "Key Preference Indicator"], "answer": "Key Performance Indicator"},
+    {"question": "SSO stands for", "options": ["Simple Sign On", "Sample Sign On", "Single Sign One", "Single Sign On"], "answer": "Single Sign On"},
+    {"question": "IDA stands for", "options": ["Interesting Document Analysis", "Intelligent Document Automation", "Inverse Document Analysis", "Intelligent Diverse Automation"], "answer": "Intelligent Document Automation"},
+    {"question": "DISA stands for", "options": ["Dormant Intelligence Switch Architecture", "Device Intelligence Service Architecture", "Document Intelligence Solution Architecture", "Document Intelligence Solution Analysis"], "answer": "Document Intelligence Solution Architecture"},
 ]
 
 # Shuffle questions to add variety
