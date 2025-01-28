@@ -22,7 +22,7 @@ def custom_style():
         """
         <style>
         .stApp {
-            background-color: #fffc5;
+            background-color: #f5f5f5;
             color: #333;
             font-family: Arial, sans-serif;
         }
@@ -44,7 +44,7 @@ def custom_style():
             color: #4caf50;
         }
         .options {
-            color: #4169e1;
+            color: #007BFF;
             font-weight: bold;
         }
         </style>
@@ -64,7 +64,7 @@ def main():
     if 'score' not in st.session_state:
         st.session_state.score = 0
     if 'time_left' not in st.session_state:
-        st.session_state.time_left = 30
+        st.session_state.time_left = 60
     if 'answered' not in st.session_state:
         st.session_state.answered = False
 
@@ -88,8 +88,7 @@ def main():
     # Display options
     selected_option = st.radio(
         "Choose your answer:", 
-        [f"<span class='options'>{opt}</span>" for opt in question['options']],
-        format_func=lambda x: x,  # Ensures proper rendering
+        question['options'],
         key=f"q{st.session_state.current_question}"
     )
 
@@ -97,12 +96,12 @@ def main():
     if st.button("Submit"):
         if not st.session_state.answered:
             st.session_state.answered = True
-            if selected_option.strip() == question['answer']:
+            if selected_option == question['answer']:
                 st.success("✅ Correct!")
                 st.session_state.score += 1
             else:
                 st.error(f"❌ Wrong! The correct answer was {question['answer']}.")
-            
+
             # Proceed to next question or end game
             if st.session_state.current_question < len(QUESTIONS) - 1:
                 st.session_state.current_question += 1
@@ -111,9 +110,8 @@ def main():
                 st.balloons()
                 st.markdown(f"<div class='score'>🎉 You've completed the game! Your final score is {st.session_state.score}.</div>", unsafe_allow_html=True)
 
-    st.markdown("<div style='margin-top: 20px;'></div>", unsafe_allow_html=True)
-    st.markdown(f"<div class='score'>Score: {st.session_state.score}</div>", unsafe_allow_html=True)
-    st.markdown(f"<div class='timer'>⏳ Time left: {st.session_state.time_left} seconds</div>", unsafe_allow_html=True)
+    if not st.session_state.answered:
+        st.markdown(f"<div class='score'>Score: {st.session_state.score}</div>", unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
