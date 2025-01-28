@@ -81,7 +81,7 @@ def main():
         st.session_state.user_sessions[username] = {
             'current_question': 0,
             'score': 0,
-            'time_left': 60,
+            'time_left': 20,
             'start_time': time.time(),
             'asked_questions': set()
         }
@@ -90,7 +90,7 @@ def main():
 
     # Timer logic
     time_elapsed = time.time() - user_data['start_time']
-    user_data['time_left'] = max(0, 60 - int(time_elapsed))
+    user_data['time_left'] = max(0, 20 - int(time_elapsed))
 
     if user_data['time_left'] == 0:
         st.warning(f"⏰ Time's up, {username}! The game is over.")
