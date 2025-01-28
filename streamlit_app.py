@@ -22,12 +22,12 @@ def custom_style():
         """
         <style>
         .stApp {
-            background-color: #6699cc;
+            background-color: #f5f5f5;
             color: #333;
             font-family: Arial, sans-serif;
         }
         .question-card {
-            background: orange;
+            background: white;
             border-radius: 10px;
             padding: 20px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -43,9 +43,18 @@ def custom_style():
             font-weight: bold;
             color: #4caf50;
         }
-        .options {
-            color: #007BFF;
-            font-weight: bold;
+        .option-button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin: 5px;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .option-button:hover {
+            background-color: #0056b3;
         }
         </style>
         """,
@@ -73,7 +82,6 @@ def main():
             'current_question': 0,
             'score': 0,
             'time_left': 60,
-            'answered': False,
             'start_time': time.time(),
             'asked_questions': set()
         }
@@ -106,34 +114,27 @@ def main():
             user_data['asked_questions'].add(question['question'])
             st.markdown(f"<div class='question-card'><strong>Question {user_data['current_question'] + 1}: </strong>{question['question']}</div>", unsafe_allow_html=True)
 
-            # Display options
-            selected_option = st.radio(
-                "Choose your answer:", 
-                question['options'],
-                key=f"{username}_q{user_data['current_question']}"
-            )
+            # Display options as buttons
+            col1, col2 = st.columns(2)
+            for i, option in enumerate(question['options']):
+                with col1 if i % 2 == 0 else col2:
+                    if st.button(option, key=f"{username}_q{user_data['current_question']}_option{i}", use_container_width=True):
+                        if option == question['answer']:
+                            st.success("✅ Correct!")
+                            user_data['score'] += 1
+                        else:
+                            st.error(f"❌ Wrong! The correct answer was {question['answer']}.")
 
-            # Submit button
-            if st.button("Submit", key=f"{username}_submit"):
-                if not user_data['answered']:
-                    user_data['answered'] = True
-                    if selected_option == question['answer']:
-                        st.success("✅ Correct!")
-                        user_data['score'] += 1
-                    else:
-                        st.error(f"❌ Wrong! The correct answer was {question['answer']}.")
+                        if user_data['current_question'] < len(QUESTIONS) - 1:
+                            user_data['current_question'] += 1
+                            user_data['start_time'] = time.time()
+                            st.experimental_rerun()
+                        else:
+                            st.balloons()
+                            st.markdown(f"<div class='score'>🎉 You've completed the game, {username}! Your final score is {user_data['score']}.</div>", unsafe_allow_html=True)
+                            st.stop()
 
-                    if user_data['current_question'] < len(QUESTIONS) - 1:
-                        user_data['current_question'] += 1
-                        user_data['answered'] = False
-                        user_data['start_time'] = time.time()
-                    else:
-                        st.balloons()
-                        st.markdown(f"<div class='score'>🎉 You've completed the game, {username}! Your final score is {user_data['score']}.</div>", unsafe_allow_html=True)
-                        st.stop()
-
-    if not user_data['answered']:
-        st.markdown(f"<div class='score'>Score: {user_data['score']}</div>", unsafe_allow_html=True)
+    st.markdown(f"<div class='score'>Score: {user_data['score']}</div>", unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
