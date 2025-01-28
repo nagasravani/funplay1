@@ -69,6 +69,8 @@ def main():
         st.session_state.answered = False
     if 'start_time' not in st.session_state:
         st.session_state.start_time = time.time()
+    if 'asked_questions' not in st.session_state:
+        st.session_state.asked_questions = set()
 
     # Timer logic
     time_elapsed = time.time() - st.session_state.start_time
@@ -83,34 +85,43 @@ def main():
     with timer_placeholder:
         st.markdown(f"<div class='timer'>⏳ Time left: {st.session_state.time_left} seconds</div>", unsafe_allow_html=True)
 
-    # Display current question
-    question = QUESTIONS[st.session_state.current_question]
-    st.markdown(f"<div class='question-card'><strong>Question {st.session_state.current_question + 1}: </strong>{question['question']}</div>", unsafe_allow_html=True)
+    # Ensure question is not repeated
+    if st.session_state.current_question < len(QUESTIONS):
+        question = QUESTIONS[st.session_state.current_question]
+        while question['question'] in st.session_state.asked_questions:
+            st.session_state.current_question += 1
+            if st.session_state.current_question >= len(QUESTIONS):
+                break
+            question = QUESTIONS[st.session_state.current_question]
 
-    # Display options
-    selected_option = st.radio(
-        "Choose your answer:", 
-        question['options'],
-        key=f"q{st.session_state.current_question}"
-    )
+        if st.session_state.current_question < len(QUESTIONS):
+            st.session_state.asked_questions.add(question['question'])
+            st.markdown(f"<div class='question-card'><strong>Question {st.session_state.current_question + 1}: </strong>{question['question']}</div>", unsafe_allow_html=True)
 
-    # Submit button
-    if st.button("Submit"):
-        if not st.session_state.answered:
-            st.session_state.answered = True
-            if selected_option == question['answer']:
-                st.success("✅ Correct!")
-                st.session_state.score += 1
-            else:
-                st.error(f"❌ Wrong! The correct answer was {question['answer']}.")
+            # Display options
+            selected_option = st.radio(
+                "Choose your answer:", 
+                question['options'],
+                key=f"q{st.session_state.current_question}"
+            )
 
-            if st.session_state.current_question < len(QUESTIONS) - 1:
-                st.session_state.current_question += 1
-                st.session_state.answered = False
-                st.session_state.start_time = time.time()
-            else:
-                st.balloons()
-                st.markdown(f"<div class='score'>🎉 You've completed the game! Your final score is {st.session_state.score}.</div>", unsafe_allow_html=True)
+            # Submit button
+            if st.button("Submit"):
+                if not st.session_state.answered:
+                    st.session_state.answered = True
+                    if selected_option == question['answer']:
+                        st.success("✅ Correct!")
+                        st.session_state.score += 1
+                    else:
+                        st.error(f"❌ Wrong! The correct answer was {question['answer']}.")
+
+                    if st.session_state.current_question < len(QUESTIONS) - 1:
+                        st.session_state.current_question += 1
+                        st.session_state.answered = False
+                        st.session_state.start_time = time.time()
+                    else:
+                        st.balloons()
+                        st.markdown(f"<div class='score'>🎉 You've completed the game! Your final score is {st.session_state.score}.</div>", unsafe_allow_html=True)
 
     if not st.session_state.answered:
         st.markdown(f"<div class='score'>Score: {st.session_state.score}</div>", unsafe_allow_html=True)
