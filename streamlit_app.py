@@ -27,7 +27,7 @@ def custom_style():
             font-family: Arial, sans-serif;
         }
         .question-card {
-            background: white;
+            background: orange;
             border-radius: 10px;
             padding: 20px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
