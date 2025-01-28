@@ -44,7 +44,7 @@ def custom_style():
             color: #4caf50;
         }
         .options {
-            color: #00008b;
+            color: #007BFF;
             font-weight: bold;
         }
         </style>
@@ -100,15 +100,16 @@ def main():
                 st.success("✅ Correct!")
                 st.session_state.score += 1
             else:
-                st.error(f"❌ Wrong! The correct answer was {question['answer']}.")
+                st.error(f"❌ Wrong!")
 
-            # Proceed to next question or end game
-            if st.session_state.current_question < len(QUESTIONS) - 1:
-                st.session_state.current_question += 1
-                st.session_state.answered = False
-            else:
-                st.balloons()
-                st.markdown(f"<div class='score'>🎉 You've completed the game! Your final score is {st.session_state.score}.</div>", unsafe_allow_html=True)
+    # Next button to proceed
+    if st.session_state.answered and st.button("Next"):
+        if st.session_state.current_question < len(QUESTIONS) - 1:
+            st.session_state.current_question += 1
+            st.session_state.answered = False
+        else:
+            st.balloons()
+            st.markdown(f"<div class='score'>🎉 You've completed the game! Your final score is {st.session_state.score}.</div>", unsafe_allow_html=True)
 
     if not st.session_state.answered:
         st.markdown(f"<div class='score'>Score: {st.session_state.score}</div>", unsafe_allow_html=True)
