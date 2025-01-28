@@ -22,7 +22,7 @@ def custom_style():
         """
         <style>
         .stApp {
-            background-color: #FFFFC5;
+            background-color: #6699cc;
             color: #333;
             font-family: Arial, sans-serif;
         }
