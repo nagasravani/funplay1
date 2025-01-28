@@ -122,6 +122,7 @@ def main():
                         if option == question['answer']:
                             st.success("✅ Correct!")
                             user_data['score'] += 1
+                            st.markdown(f"<div class='score'>Your updated score is {user_data['score']}!</div>", unsafe_allow_html=True)
                         else:
                             st.error(f"❌ Wrong! The correct answer was {question['answer']}.")
 
