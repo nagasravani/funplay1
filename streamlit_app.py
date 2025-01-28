@@ -43,6 +43,10 @@ def custom_style():
             font-weight: bold;
             color: #4caf50;
         }
+        .options {
+            color: #007BFF;
+            font-weight: bold;
+        }
         </style>
         """,
         unsafe_allow_html=True,
@@ -82,13 +86,18 @@ def main():
     st.markdown(f"<div class='question-card'><strong>Question {st.session_state.current_question + 1}: </strong>{question['question']}</div>", unsafe_allow_html=True)
 
     # Display options
-    selected_option = st.radio("Choose your answer:", question['options'])
+    selected_option = st.radio(
+        "Choose your answer:", 
+        [f"<span class='options'>{opt}</span>" for opt in question['options']],
+        format_func=lambda x: x,  # Ensures proper rendering
+        key=f"q{st.session_state.current_question}"
+    )
 
     # Submit button
     if st.button("Submit"):
         if not st.session_state.answered:
             st.session_state.answered = True
-            if selected_option == question['answer']:
+            if selected_option.strip() == question['answer']:
                 st.success("✅ Correct!")
                 st.session_state.score += 1
             else:
