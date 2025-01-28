@@ -44,7 +44,7 @@ def custom_style():
             color: #4caf50;
         }
         .options {
-            color: #007BFF;
+            color: #00008B;
             font-weight: bold;
         }
         </style>
