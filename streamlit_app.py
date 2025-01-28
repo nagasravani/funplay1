@@ -67,19 +67,21 @@ def main():
         st.session_state.time_left = 60
     if 'answered' not in st.session_state:
         st.session_state.answered = False
+    if 'start_time' not in st.session_state:
+        st.session_state.start_time = time.time()
 
     # Timer logic
-    if st.session_state.time_left > 0:
-        timer_placeholder = st.empty()
-        with timer_placeholder:
-            st.markdown(f"<div class='timer'>⏳ Time left: {st.session_state.time_left} seconds</div>", unsafe_allow_html=True)
-        time.sleep(1)
-        st.session_state.time_left -= 1
-        timer_placeholder.empty()
-    else:
+    time_elapsed = time.time() - st.session_state.start_time
+    st.session_state.time_left = max(0, 60 - int(time_elapsed))
+
+    if st.session_state.time_left == 0:
         st.warning("⏰ Time's up! The game is over.")
         st.markdown(f"<div class='score'>Your final score is {st.session_state.score}.</div>", unsafe_allow_html=True)
         return
+
+    timer_placeholder = st.empty()
+    with timer_placeholder:
+        st.markdown(f"<div class='timer'>⏳ Time left: {st.session_state.time_left} seconds</div>", unsafe_allow_html=True)
 
     # Display current question
     question = QUESTIONS[st.session_state.current_question]
@@ -100,16 +102,15 @@ def main():
                 st.success("✅ Correct!")
                 st.session_state.score += 1
             else:
-                st.error(f"❌ Wrong!")
+                st.error(f"❌ Wrong! The correct answer was {question['answer']}.")
 
-    # Next button to proceed
-    if st.session_state.answered and st.button("Next"):
-        if st.session_state.current_question < len(QUESTIONS) - 1:
-            st.session_state.current_question += 1
-            st.session_state.answered = False
-        else:
-            st.balloons()
-            st.markdown(f"<div class='score'>🎉 You've completed the game! Your final score is {st.session_state.score}.</div>", unsafe_allow_html=True)
+            if st.session_state.current_question < len(QUESTIONS) - 1:
+                st.session_state.current_question += 1
+                st.session_state.answered = False
+                st.session_state.start_time = time.time()
+            else:
+                st.balloons()
+                st.markdown(f"<div class='score'>🎉 You've completed the game! Your final score is {st.session_state.score}.</div>", unsafe_allow_html=True)
 
     if not st.session_state.answered:
         st.markdown(f"<div class='score'>Score: {st.session_state.score}</div>", unsafe_allow_html=True)
