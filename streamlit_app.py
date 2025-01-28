@@ -58,73 +58,82 @@ def main():
 
     st.title("🎉 Welcome to the Trivia Game! 🎉")
 
-    # Initialize session state variables
-    if 'current_question' not in st.session_state:
-        st.session_state.current_question = 0
-    if 'score' not in st.session_state:
-        st.session_state.score = 0
-    if 'time_left' not in st.session_state:
-        st.session_state.time_left = 60
-    if 'answered' not in st.session_state:
-        st.session_state.answered = False
-    if 'start_time' not in st.session_state:
-        st.session_state.start_time = time.time()
-    if 'asked_questions' not in st.session_state:
-        st.session_state.asked_questions = set()
+    # User identification for multiplayer support
+    username = st.text_input("Enter your name to start:")
+    if not username:
+        st.warning("Please enter your name to begin.")
+        st.stop()
+
+    # Initialize session state variables per user
+    if 'user_sessions' not in st.session_state:
+        st.session_state.user_sessions = {}
+
+    if username not in st.session_state.user_sessions:
+        st.session_state.user_sessions[username] = {
+            'current_question': 0,
+            'score': 0,
+            'time_left': 30,
+            'answered': False,
+            'start_time': time.time(),
+            'asked_questions': set()
+        }
+
+    user_data = st.session_state.user_sessions[username]
 
     # Timer logic
-    time_elapsed = time.time() - st.session_state.start_time
-    st.session_state.time_left = max(0, 60 - int(time_elapsed))
+    time_elapsed = time.time() - user_data['start_time']
+    user_data['time_left'] = max(0, 30 - int(time_elapsed))
 
-    if st.session_state.time_left == 0:
-        st.warning("⏰ Time's up! The game is over.")
-        st.markdown(f"<div class='score'>Your final score is {st.session_state.score}.</div>", unsafe_allow_html=True)
-        return
+    if user_data['time_left'] == 0:
+        st.warning(f"⏰ Time's up, {username}! The game is over.")
+        st.markdown(f"<div class='score'>Your final score is {user_data['score']}.</div>", unsafe_allow_html=True)
+        st.stop()
 
     timer_placeholder = st.empty()
     with timer_placeholder:
-        st.markdown(f"<div class='timer'>⏳ Time left: {st.session_state.time_left} seconds</div>", unsafe_allow_html=True)
+        st.markdown(f"<div class='timer'>⏳ Time left: {user_data['time_left']} seconds</div>", unsafe_allow_html=True)
 
     # Ensure question is not repeated
-    if st.session_state.current_question < len(QUESTIONS):
-        question = QUESTIONS[st.session_state.current_question]
-        while question['question'] in st.session_state.asked_questions:
-            st.session_state.current_question += 1
-            if st.session_state.current_question >= len(QUESTIONS):
+    if user_data['current_question'] < len(QUESTIONS):
+        question = QUESTIONS[user_data['current_question']]
+        while question['question'] in user_data['asked_questions']:
+            user_data['current_question'] += 1
+            if user_data['current_question'] >= len(QUESTIONS):
                 break
-            question = QUESTIONS[st.session_state.current_question]
+            question = QUESTIONS[user_data['current_question']]
 
-        if st.session_state.current_question < len(QUESTIONS):
-            st.session_state.asked_questions.add(question['question'])
-            st.markdown(f"<div class='question-card'><strong>Question {st.session_state.current_question + 1}: </strong>{question['question']}</div>", unsafe_allow_html=True)
+        if user_data['current_question'] < len(QUESTIONS):
+            user_data['asked_questions'].add(question['question'])
+            st.markdown(f"<div class='question-card'><strong>Question {user_data['current_question'] + 1}: </strong>{question['question']}</div>", unsafe_allow_html=True)
 
             # Display options
             selected_option = st.radio(
                 "Choose your answer:", 
                 question['options'],
-                key=f"q{st.session_state.current_question}"
+                key=f"{username}_q{user_data['current_question']}"
             )
 
             # Submit button
-            if st.button("Submit"):
-                if not st.session_state.answered:
-                    st.session_state.answered = True
+            if st.button("Submit", key=f"{username}_submit"):
+                if not user_data['answered']:
+                    user_data['answered'] = True
                     if selected_option == question['answer']:
                         st.success("✅ Correct!")
-                        st.session_state.score += 1
+                        user_data['score'] += 1
                     else:
                         st.error(f"❌ Wrong! The correct answer was {question['answer']}.")
 
-                    if st.session_state.current_question < len(QUESTIONS) - 1:
-                        st.session_state.current_question += 1
-                        st.session_state.answered = False
-                        st.session_state.start_time = time.time()
+                    if user_data['current_question'] < len(QUESTIONS) - 1:
+                        user_data['current_question'] += 1
+                        user_data['answered'] = False
+                        user_data['start_time'] = time.time()
                     else:
                         st.balloons()
-                        st.markdown(f"<div class='score'>🎉 You've completed the game! Your final score is {st.session_state.score}.</div>", unsafe_allow_html=True)
+                        st.markdown(f"<div class='score'>🎉 You've completed the game, {username}! Your final score is {user_data['score']}.</div>", unsafe_allow_html=True)
+                        st.stop()
 
-    if not st.session_state.answered:
-        st.markdown(f"<div class='score'>Score: {st.session_state.score}</div>", unsafe_allow_html=True)
+    if not user_data['answered']:
+        st.markdown(f"<div class='score'>Score: {user_data['score']}</div>", unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
