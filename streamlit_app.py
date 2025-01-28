@@ -22,12 +22,12 @@ def custom_style():
         """
         <style>
         .stApp {
-            background-color: #f5f5f5;
+            background-color: #6699cc;
             color: #333;
             font-family: Arial, sans-serif;
         }
         .question-card {
-            background: white;
+            background: orange;
             border-radius: 10px;
             padding: 20px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
