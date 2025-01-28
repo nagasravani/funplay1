@@ -22,12 +22,12 @@ def custom_style():
         """
         <style>
         .stApp {
-            background-color: #6699cc;
+            background-color: #f5f5f5;
             color: #333;
             font-family: Arial, sans-serif;
         }
         .question-card {
-            background: orange;
+            background: white;
             border-radius: 10px;
             padding: 20px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -72,7 +72,7 @@ def main():
         st.session_state.user_sessions[username] = {
             'current_question': 0,
             'score': 0,
-            'time_left': 30,
+            'time_left': 60,
             'answered': False,
             'start_time': time.time(),
             'asked_questions': set()
@@ -82,7 +82,7 @@ def main():
 
     # Timer logic
     time_elapsed = time.time() - user_data['start_time']
-    user_data['time_left'] = max(0, 30 - int(time_elapsed))
+    user_data['time_left'] = max(0, 60 - int(time_elapsed))
 
     if user_data['time_left'] == 0:
         st.warning(f"⏰ Time's up, {username}! The game is over.")
