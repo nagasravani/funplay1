@@ -1,9 +1,6 @@
 import streamlit as st
 import time
 import random
-from streamlit_extras.add_vertical_space import add_vertical_space
-from streamlit_extras.styling import apply_custom_css
-
 # Define trivia questions and answers
 QUESTIONS = [
     {"question": "URL stands for", "options": ["Unit Resource Load", "Uniform Read Locator", "Uniform Resource Locator", "Unit Resource Locator"], "answer": "Uniform Resource Locator"},
@@ -21,33 +18,35 @@ QUESTIONS = [
 random.shuffle(QUESTIONS)
 
 def custom_style():
-    custom_css = """
-    <style>
-    .stApp {
-        background-color: #f5f5f5;
-        color: #333;
-        font-family: Arial, sans-serif;
-    }
-    .question-card {
-        background: white;
-        border-radius: 10px;
-        padding: 20px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        margin-bottom: 20px;
-    }
-    .timer {
-        font-size: 1.5rem;
-        font-weight: bold;
-        color: #f44336;
-    }
-    .score {
-        font-size: 1.2rem;
-        font-weight: bold;
-        color: #4caf50;
-    }
-    </style>
-    """
-    apply_custom_css(custom_css)
+    st.markdown(
+        """
+        <style>
+        .stApp {
+            background-color: #f5f5f5;
+            color: #333;
+            font-family: Arial, sans-serif;
+        }
+        .question-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .timer {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #f44336;
+        }
+        .score {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #4caf50;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
 
 def main():
     st.set_page_config(page_title="Trivia Game", layout="centered")
@@ -103,7 +102,7 @@ def main():
                 st.balloons()
                 st.markdown(f"<div class='score'>🎉 You've completed the game! Your final score is {st.session_state.score}.</div>", unsafe_allow_html=True)
 
-    add_vertical_space(2)
+    st.markdown("<div style='margin-top: 20px;'></div>", unsafe_allow_html=True)
     st.markdown(f"<div class='score'>Score: {st.session_state.score}</div>", unsafe_allow_html=True)
     st.markdown(f"<div class='timer'>⏳ Time left: {st.session_state.time_left} seconds</div>", unsafe_allow_html=True)
 
