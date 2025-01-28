@@ -22,12 +22,12 @@ def custom_style():
         """
         <style>
         .stApp {
-            background-color: #6699cc;
+            background-color: #f5f5f5;
             color: #333;
             font-family: Arial, sans-serif;
         }
         .question-card {
-            background: orange;
+            background: white;
             border-radius: 10px;
             padding: 20px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -120,9 +120,8 @@ def main():
                 with col1 if i % 2 == 0 else col2:
                     if st.button(option, key=f"{username}_q{user_data['current_question']}_option{i}", use_container_width=True):
                         if option == question['answer']:
-                            st.success("✅ Correct!")
                             user_data['score'] += 1
-                            st.markdown(f"<div class='score'>Your updated score is {user_data['score']}!</div>", unsafe_allow_html=True)
+                            st.success("✅ Correct!")
                         else:
                             st.error(f"❌ Wrong! The correct answer was {question['answer']}.")
 
