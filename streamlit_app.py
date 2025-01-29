@@ -36,41 +36,41 @@ def main():
             'current_question': 0,
             'score': 0,
             'asked_questions': set(),
-            'last_answer_correct': None
+            'selected_option': None,
+            'show_answer': False
         }
 
     user_data = st.session_state.user_sessions[username]
 
     st.markdown(f"### Score: {'⭐' * user_data['score']} {'🍏' * (user_data['current_question'] - user_data['score'])}")
 
-    # Ensure question is not repeated
     if user_data['current_question'] < len(QUESTIONS):
         question = QUESTIONS[user_data['current_question']]
-        while question['question'] in user_data['asked_questions']:
-            user_data['current_question'] += 1
-            if user_data['current_question'] >= len(QUESTIONS):
-                break
-            question = QUESTIONS[user_data['current_question']]
 
-        if user_data['current_question'] < len(QUESTIONS):
+        if question['question'] not in user_data['asked_questions']:
             user_data['asked_questions'].add(question['question'])
-            st.markdown(f"### {user_data['current_question'] + 1}. {question['question']}")
 
-            # Display options as buttons
-            for option in question['options']:
-                button_key = f"{username}_q{user_data['current_question']}_option_{option}"
-                if st.button(option, key=button_key):
-                    if option == question['answer']:
-                        user_data['score'] += 1
-                        user_data['last_answer_correct'] = True
-                        st.success("✅ Correct!")
-                    else:
-                        user_data['last_answer_correct'] = False
-                        st.error(f"❌ Wrong! The correct answer was **{question['answer']}**.")
-                    time.sleep(1.5)  # Wait before rerun
-                    user_data['current_question'] += 1
-                    user_data['last_answer_correct'] = None
-                    st.experimental_rerun()
+        st.markdown(f"### {user_data['current_question'] + 1}. {question['question']}")
+
+        for option in question['options']:
+            button_key = f"{username}_q{user_data['current_question']}_option_{option}"
+            if st.button(option, key=button_key):
+                user_data['selected_option'] = option
+                user_data['show_answer'] = True
+                if option == question['answer']:
+                    user_data['score'] += 1
+                st.experimental_rerun()
+
+        if user_data['show_answer']:
+            if user_data['selected_option'] == question['answer']:
+                st.success("✅ Correct!")
+            else:
+                st.error(f"❌ Wrong! The correct answer was **{question['answer']}**.")
+            time.sleep(1.5)
+            user_data['current_question'] += 1
+            user_data['selected_option'] = None
+            user_data['show_answer'] = False
+            st.experimental_rerun()
 
     else:
         st.balloons()
