@@ -68,11 +68,11 @@ def main():
         if question['question'] not in user_data['asked_questions']:
             user_data['asked_questions'].add(question['question'])
 
-        st.markdown(f"### {user_data['current_question'] + 1}. {question['question']}")
+        st.markdown(f"<h3 style='color: orange;'>{user_data['current_question'] + 1}. {question['question']}</h3>", unsafe_allow_html=True)
 
         for option in question['options']:
             button_key = f"{username}_q{user_data['current_question']}_option_{option}"
-            if st.button(option, key=button_key):
+            if st.button(f"<span style='color: white;'>{option}</span>", key=button_key, help=option):
                 user_data['selected_option'] = option
                 user_data['show_answer'] = True
                 if option == question['answer']:
@@ -99,3 +99,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
