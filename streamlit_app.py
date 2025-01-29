@@ -17,54 +17,8 @@ QUESTIONS = [
 
 random.shuffle(QUESTIONS)
 
-def custom_style():
-    st.markdown(
-        """
-        <style>
-        .stApp {
-            background-color: #f5f5f5;
-            color: #333;
-            font-family: Arial, sans-serif;
-        }
-        .question-card {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
-        .timer {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #f44336;
-        }
-        .score {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #4caf50;
-        }
-        .option-button {
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            margin: 5px;
-            font-size: 1rem;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .option-button:hover {
-            background-color: #0056b3;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True,
-    )
-
 def main():
     st.set_page_config(page_title="Trivia Game", layout="centered")
-    custom_style()
-
     st.title("🎉 Welcome to the Trivia Game! 🎉")
 
     # User identification for multiplayer support
@@ -94,12 +48,11 @@ def main():
 
     if user_data['time_left'] == 0:
         st.warning(f"⏰ Time's up, {username}! The game is over.")
-        st.markdown(f"<div class='score'>Your final score is {user_data['score']}.</div>", unsafe_allow_html=True)
+        st.markdown(f"### Final Score: {user_data['score']}")
         st.stop()
 
-    timer_placeholder = st.empty()
-    with timer_placeholder:
-        st.markdown(f"<div class='timer'>⏳ Time left: {user_data['time_left']} seconds</div>", unsafe_allow_html=True)
+    st.markdown(f"## ⏳ Time left: {user_data['time_left']} seconds")
+    st.markdown(f"### Score: {user_data['score']}")
 
     # Ensure question is not repeated
     if user_data['current_question'] < len(QUESTIONS):
@@ -112,29 +65,26 @@ def main():
 
         if user_data['current_question'] < len(QUESTIONS):
             user_data['asked_questions'].add(question['question'])
-            st.markdown(f"<div class='question-card'><strong>Question {user_data['current_question'] + 1}: </strong>{question['question']}</div>", unsafe_allow_html=True)
+            st.markdown(f"### {user_data['current_question'] + 1}. {question['question']}")
 
             # Display options as buttons
-            col1, col2 = st.columns(2)
-            for i, option in enumerate(question['options']):
-                with col1 if i % 2 == 0 else col2:
-                    if st.button(option, key=f"{username}_q{user_data['current_question']}_option{i}", use_container_width=True):
-                        if option == question['answer']:
-                            user_data['score'] += 1
-                            st.success("✅ Correct!")
-                        else:
-                            st.error(f"❌ Wrong! The correct answer was {question['answer']}.")
+            for option in question['options']:
+                button_key = f"{username}_q{user_data['current_question']}_option_{option}"
+                if st.button(option, key=button_key):
+                    if option == question['answer']:
+                        user_data['score'] += 1
+                        st.markdown(f"<span style='color: green; font-weight: bold;'>✅ Correct!</span>", unsafe_allow_html=True)
+                    else:
+                        st.markdown(f"<span style='color: red; font-weight: bold;'>❌ Wrong!</span>", unsafe_allow_html=True)
 
-                        if user_data['current_question'] < len(QUESTIONS) - 1:
-                            user_data['current_question'] += 1
-                            user_data['start_time'] = time.time()
-                            st.experimental_rerun()
-                        else:
-                            st.balloons()
-                            st.markdown(f"<div class='score'>🎉 You've completed the game, {username}! Your final score is {user_data['score']}.</div>", unsafe_allow_html=True)
-                            st.stop()
-
-    st.markdown(f"<div class='score'>Score: {user_data['score']}</div>", unsafe_allow_html=True)
+                    if user_data['current_question'] < len(QUESTIONS) - 1:
+                        user_data['current_question'] += 1
+                        user_data['start_time'] = time.time()
+                        st.experimental_rerun()
+                    else:
+                        st.balloons()
+                        st.markdown(f"### 🎉 Game Over! Your final score is {user_data['score']}")
+                        st.stop()
 
 if __name__ == "__main__":
     main()
