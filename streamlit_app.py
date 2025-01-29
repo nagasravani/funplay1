@@ -17,7 +17,7 @@ QUESTIONS = [
 
 random.shuffle(QUESTIONS)
 
-ef main():
+def main():
     st.set_page_config(page_title="Trivia Game", layout="centered")
     st.title("🎉 Welcome to the Trivia Game! 🎉")
 
