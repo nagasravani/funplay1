@@ -66,7 +66,7 @@ def main():
                         st.success("✅ Correct!")
                     else:
                         user_data['last_answer_correct'] = False
-                        st.error(f"❌ Wrong! The correct answer was {question['answer']}.")
+                        st.error(f"❌ Wrong! The correct answer was **{question['answer']}**.")
                     time.sleep(1.5)  # Wait before rerun
                     user_data['current_question'] += 1
                     user_data['last_answer_correct'] = None
