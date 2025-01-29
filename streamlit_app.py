@@ -37,7 +37,8 @@ def main():
             'score': 0,
             'time_left': 20,
             'start_time': time.time(),
-            'asked_questions': set()
+            'asked_questions': set(),
+            'last_answer_correct': None
         }
 
     user_data = st.session_state.user_sessions[username]
@@ -73,22 +74,32 @@ def main():
                 if st.button(option, key=button_key):
                     if option == question['answer']:
                         user_data['score'] += 1
-                        st.success(f"✅ Correct! {option}")
+                        user_data['last_answer_correct'] = True
                     else:
-                        st.error(f"❌ Wrong! The correct answer was {question['answer']}.")
+                        user_data['last_answer_correct'] = False
+                    user_data['start_time'] = time.time()
+                    st.experimental_rerun()
 
-                    if user_data['current_question'] < len(QUESTIONS) - 1:
-                        user_data['current_question'] += 1
-                        user_data['start_time'] = time.time()
-                        st.experimental_rerun()
-                    else:
-                        st.balloons()
-                        st.markdown(f"### 🎉 Game Over! Your final score is {'⭐' * user_data['score']} {'🍏' * (len(QUESTIONS) - user_data['score'])}")
-                        st.markdown("#### 🔄 Click Restart to play again!")
-                        if st.button("Restart"):
-                            del st.session_state.user_sessions[username]
-                            st.experimental_rerun()
-                        st.stop()
+            # Show correct or incorrect message before rerun
+            if user_data['last_answer_correct'] is not None:
+                if user_data['last_answer_correct']:
+                    st.success("✅ Correct!")
+                else:
+                    st.error(f"❌ Wrong! The correct answer was {question['answer']}.")
+                time.sleep(1.5)  # Wait before rerun
+                user_data['current_question'] += 1
+                user_data['last_answer_correct'] = None
+                st.experimental_rerun()
+
+    else:
+        st.balloons()
+        st.markdown(f"### 🎉 Game Over! Your final score is {'⭐' * user_data['score']} {'🍏' * (len(QUESTIONS) - user_data['score'])}")
+        st.markdown("#### 🔄 Click Restart to play again!")
+        if st.button("Restart"):
+            del st.session_state.user_sessions[username]
+            st.experimental_rerun()
+        st.stop()
 
 if __name__ == "__main__":
     main()
+
