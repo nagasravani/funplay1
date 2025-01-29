@@ -37,16 +37,34 @@ def main():
             'score': 0,
             'asked_questions': set(),
             'selected_option': None,
-            'show_answer': False
+            'show_answer': False,
+            'time_left': 60
         }
 
     user_data = st.session_state.user_sessions[username]
-
     st.markdown(f"### Score: {'⭐' * user_data['score']} {'🍏' * (user_data['current_question'] - user_data['score'])}")
+    
+    # Timer
+    if 'timer_running' not in st.session_state:
+        st.session_state.timer_running = True
+    
+    col1, col2 = st.columns([3, 1])
+    with col2:
+        st.markdown(f"⏳ **Time Left: {user_data['time_left']} sec**")
+    
+    if user_data['time_left'] > 0:
+        time.sleep(1)
+        user_data['time_left'] -= 1
+        st.session_state.user_sessions[username] = user_data
+        st.rerun()
+    else:
+        st.error("Time's up! Game Over.")
+        time.sleep(2)
+        del st.session_state.user_sessions[username]
+        st.rerun()
 
     if user_data['current_question'] < len(QUESTIONS):
         question = QUESTIONS[user_data['current_question']]
-
         if question['question'] not in user_data['asked_questions']:
             user_data['asked_questions'].add(question['question'])
 
@@ -59,20 +77,16 @@ def main():
                 user_data['show_answer'] = True
                 if option == question['answer']:
                     user_data['score'] += 1
+                    st.success("✅ Correct!")
+                else:
+                    st.error(f"❌ Wrong! The correct answer was **{question['answer']}**.")
+                st.session_state.user_sessions[username] = user_data
+                time.sleep(1)
+                user_data['current_question'] += 1
+                user_data['selected_option'] = None
+                user_data['show_answer'] = False
                 st.session_state.user_sessions[username] = user_data
                 st.rerun()
-
-        if user_data['show_answer']:
-            if user_data['selected_option'] == question['answer']:
-                st.success("✅ Correct!")
-            else:
-                st.error(f"❌ Wrong! The correct answer was **{question['answer']}**.")
-            time.sleep(1.5)
-            user_data['current_question'] += 1
-            user_data['selected_option'] = None
-            user_data['show_answer'] = False
-            st.session_state.user_sessions[username] = user_data
-            st.rerun()
 
     else:
         st.balloons()
