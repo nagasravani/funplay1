@@ -48,11 +48,11 @@ def main():
 
     if user_data['time_left'] == 0:
         st.warning(f"⏰ Time's up, {username}! The game is over.")
-        st.markdown(f"### Final Score: {'⭐' * user_data['score']}")
+        st.markdown(f"### Final Score: {'⭐' * user_data['score']} {'🍏' * (len(QUESTIONS) - user_data['score'])}")
         st.stop()
 
     st.markdown(f"## ⏳ Time left: {user_data['time_left']} seconds")
-    st.markdown(f"### Score: {'⭐' * user_data['score']}")
+    st.markdown(f"### Score: {'⭐' * user_data['score']} {'🍏' * (user_data['current_question'] - user_data['score'])}")
 
     # Ensure question is not repeated
     if user_data['current_question'] < len(QUESTIONS):
@@ -83,7 +83,11 @@ def main():
                         st.experimental_rerun()
                     else:
                         st.balloons()
-                        st.markdown(f"### 🎉 Game Over! Your final score is {'⭐' * user_data['score']}")
+                        st.markdown(f"### 🎉 Game Over! Your final score is {'⭐' * user_data['score']} {'🍏' * (len(QUESTIONS) - user_data['score'])}")
+                        st.markdown("#### 🔄 Click Restart to play again!")
+                        if st.button("Restart"):
+                            del st.session_state.user_sessions[username]
+                            st.experimental_rerun()
                         st.stop()
 
 if __name__ == "__main__":
