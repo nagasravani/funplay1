@@ -17,7 +17,7 @@ QUESTIONS = [
 
 random.shuffle(QUESTIONS)
 
-def main():
+ef main():
     st.set_page_config(page_title="Trivia Game", layout="centered")
     st.title("🎉 Welcome to the Trivia Game! 🎉")
 
@@ -59,7 +59,8 @@ def main():
                 user_data['show_answer'] = True
                 if option == question['answer']:
                     user_data['score'] += 1
-                st.experimental_rerun()
+                st.session_state.user_sessions[username] = user_data
+                st.rerun()
 
         if user_data['show_answer']:
             if user_data['selected_option'] == question['answer']:
@@ -70,7 +71,8 @@ def main():
             user_data['current_question'] += 1
             user_data['selected_option'] = None
             user_data['show_answer'] = False
-            st.experimental_rerun()
+            st.session_state.user_sessions[username] = user_data
+            st.rerun()
 
     else:
         st.balloons()
@@ -78,7 +80,7 @@ def main():
         st.markdown("#### 🔄 Click Restart to play again!")
         if st.button("Restart"):
             del st.session_state.user_sessions[username]
-            st.experimental_rerun()
+            st.rerun()
         st.stop()
 
 if __name__ == "__main__":
