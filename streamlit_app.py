@@ -35,24 +35,12 @@ def main():
         st.session_state.user_sessions[username] = {
             'current_question': 0,
             'score': 0,
-            'time_left': 20,
-            'start_time': time.time(),
             'asked_questions': set(),
             'last_answer_correct': None
         }
 
     user_data = st.session_state.user_sessions[username]
 
-    # Timer logic
-    time_elapsed = time.time() - user_data['start_time']
-    user_data['time_left'] = max(0, 20 - int(time_elapsed))
-
-    if user_data['time_left'] == 0:
-        st.warning(f"⏰ Time's up, {username}! The game is over.")
-        st.markdown(f"### Final Score: {'⭐' * user_data['score']} {'🍏' * (len(QUESTIONS) - user_data['score'])}")
-        st.stop()
-
-    st.markdown(f"## ⏳ Time left: {user_data['time_left']} seconds")
     st.markdown(f"### Score: {'⭐' * user_data['score']} {'🍏' * (user_data['current_question'] - user_data['score'])}")
 
     # Ensure question is not repeated
@@ -75,21 +63,14 @@ def main():
                     if option == question['answer']:
                         user_data['score'] += 1
                         user_data['last_answer_correct'] = True
+                        st.success("✅ Correct!")
                     else:
                         user_data['last_answer_correct'] = False
-                    user_data['start_time'] = time.time()
+                        st.error(f"❌ Wrong! The correct answer was {question['answer']}.")
+                    time.sleep(1.5)  # Wait before rerun
+                    user_data['current_question'] += 1
+                    user_data['last_answer_correct'] = None
                     st.experimental_rerun()
-
-            # Show correct or incorrect message before rerun
-            if user_data['last_answer_correct'] is not None:
-                if user_data['last_answer_correct']:
-                    st.success("✅ Correct!")
-                else:
-                    st.error(f"❌ Wrong! The correct answer was {question['answer']}.")
-                time.sleep(1.5)  # Wait before rerun
-                user_data['current_question'] += 1
-                user_data['last_answer_correct'] = None
-                st.experimental_rerun()
 
     else:
         st.balloons()
@@ -102,4 +83,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
