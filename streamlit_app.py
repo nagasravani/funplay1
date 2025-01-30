@@ -17,7 +17,7 @@ QUESTIONS = [
 
 random.shuffle(QUESTIONS)
 
-ddef main():
+def main():
     st.set_page_config(page_title="Trivia Game", layout="centered")
     st.markdown("""
         <style>
