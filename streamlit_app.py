@@ -17,17 +17,26 @@ QUESTIONS = [
 
 random.shuffle(QUESTIONS)
 
-def main():
+ddef main():
     st.set_page_config(page_title="Trivia Game", layout="centered")
-    st.title("🎉 Welcome to the Trivia Game! 🎉")
+    st.markdown("""
+        <style>
+            .title { text-align: center; color: #FF5733; font-size: 36px; font-weight: bold; }
+            .question { color: #FF9900; font-size: 24px; font-weight: bold; padding: 10px; }
+            .option-button { background-color: #FFFFFF; color: #000000; font-size: 18px; padding: 10px; margin: 5px; border-radius: 10px; width: 100%; text-align: center; }
+            .option-button:hover { background-color: #00CC66; color: white; }
+            .score { color: #FFD700; font-size: 20px; }
+            .timer { color: #FF0000; font-size: 18px; font-weight: bold; }
+        </style>
+    """, unsafe_allow_html=True)
 
-    # User identification for multiplayer support
+    st.markdown("<div class='title'>🎉 Welcome to the Trivia Game! 🎉</div>", unsafe_allow_html=True)
+    
     username = st.text_input("Enter your name to start:")
     if not username:
         st.warning("Please enter your name to begin.")
         st.stop()
 
-    # Initialize session state variables per user
     if 'user_sessions' not in st.session_state:
         st.session_state.user_sessions = {}
 
@@ -42,15 +51,11 @@ def main():
         }
 
     user_data = st.session_state.user_sessions[username]
-    st.markdown(f"### Score: {'⭐' * user_data['score']} {'🍏' * (user_data['current_question'] - user_data['score'])}")
-    
-    # Timer
-    if 'timer_running' not in st.session_state:
-        st.session_state.timer_running = True
+    st.markdown(f"<div class='score'>Score: {'⭐' * user_data['score']} {'🍏' * (user_data['current_question'] - user_data['score'])}</div>", unsafe_allow_html=True)
     
     col1, col2 = st.columns([3, 1])
     with col2:
-        st.markdown(f"⏳ **Time Left: {user_data['time_left']} sec**")
+        st.markdown(f"<div class='timer'>⏳ Time Left: {user_data['time_left']} sec</div>", unsafe_allow_html=True)
     
     if user_data['time_left'] > 0:
         time.sleep(1)
@@ -68,11 +73,11 @@ def main():
         if question['question'] not in user_data['asked_questions']:
             user_data['asked_questions'].add(question['question'])
 
-        st.markdown(f"<h3 style='color: orange;'>{user_data['current_question'] + 1}. {question['question']}</h3>", unsafe_allow_html=True)
+        st.markdown(f"<div class='question'>{user_data['current_question'] + 1}. {question['question']}</div>", unsafe_allow_html=True)
 
         for option in question['options']:
             button_key = f"{username}_q{user_data['current_question']}_option_{option}"
-            if st.button(f"<span style='color: white;'>{option}</span>", key=button_key, help=option):
+            if st.button(option, key=button_key):
                 user_data['selected_option'] = option
                 user_data['show_answer'] = True
                 if option == question['answer']:
@@ -99,4 +104,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
