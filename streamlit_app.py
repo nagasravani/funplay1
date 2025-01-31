@@ -21,11 +21,11 @@ def main():
     st.set_page_config(page_title="Trivia Game", layout="centered")
     st.markdown("""
         <style>
-            body { background-color: #1E1E1E; color: white; font-family: Arial, sans-serif; }
+            body { background-color: #1E1E1E; color: #FF8C00; font-family: Arial, sans-serif; }
             .title { text-align: center; color: #FFD700; font-size: 45px; font-weight: bold; padding: 20px; }
-            .question { text-align: center; color: #FFA500; font-size: 26px; font-weight: bold; padding: 15px; background-color: #333; border-radius: 15px; padding: 15px; }
-            .option-button { background-color: #555; color: white; font-size: 22px; padding: 15px; margin: 8px; border-radius: 20px; width: 100%; text-align: center; transition: 0.3s; border: 2px solid #999; cursor: pointer; }
-            .option-button:hover { background-color: #00CC66; color: white; transform: scale(1.07); }
+            .question { text-align: center; color: #FF8C00; font-size: 26px; font-weight: bold; padding: 15px; background-color: #333; border-radius: 15px; }
+            .option-button { background-color: #444; color: white; font-size: 22px; padding: 15px; margin: 8px; border-radius: 20px; width: 100%; text-align: center; transition: 0.3s; border: 2px solid #FFA500; cursor: pointer; }
+            .option-button:hover { background-color: #FF8C00; color: white; transform: scale(1.07); }
             .score { text-align: center; color: #FFD700; font-size: 28px; padding: 12px; }
             .timer { text-align: center; color: #FF4444; font-size: 22px; font-weight: bold; }
             .correct { background-color: #4CAF50 !important; color: white !important; }
@@ -59,32 +59,18 @@ def main():
     with col2:
         st.markdown(f"<div class='timer'>⏳ Time Left: {user_data['time_left']} sec</div>", unsafe_allow_html=True)
     
-    if user_data['time_left'] > 0:
-        time.sleep(1)
-        user_data['time_left'] -= 1
-        st.session_state.user_sessions[username] = user_data
-        st.rerun()
-    else:
-        st.error("Time's up! Game Over.")
-        time.sleep(2)
-        del st.session_state.user_sessions[username]
-        st.rerun()
-
     if user_data['current_question'] < len(QUESTIONS):
         question_data = QUESTIONS[user_data['current_question']]
         st.markdown(f"<div class='question'>{user_data['current_question'] + 1}. {question_data['question']}</div>", unsafe_allow_html=True)
 
         for option in question_data['options']:
-            button_key = f"{username}_q{user_data['current_question']}_option_{option}"
-            if st.button(option, key=button_key):
+            if st.button(option, key=f"{username}_q{user_data['current_question']}_option_{option}", help="Click to select answer"):
                 user_data['selected_option'] = option
                 user_data['show_answer'] = True
                 if option == question_data['answer']:
                     user_data['score'] += 1
-                    st.markdown(f"<style>#{button_key} {{ background-color: #4CAF50 !important; }}</style>", unsafe_allow_html=True)
                     st.success("✅ Correct!")
                 else:
-                    st.markdown(f"<style>#{button_key} {{ background-color: #FF5733 !important; }}</style>", unsafe_allow_html=True)
                     st.error(f"❌ Wrong! The correct answer was **{question_data['answer']}**.")
                 st.session_state.user_sessions[username] = user_data
                 time.sleep(1)
