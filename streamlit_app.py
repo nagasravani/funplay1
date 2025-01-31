@@ -15,27 +15,27 @@ QUESTIONS = [
     {"question": "DISA stands for", "options": ["Dormant Intelligence Switch Architecture", "Device Intelligence Service Architecture", "Document Intelligence Solution Architecture", "Document Intelligence Solution Analysis"], "answer": "Document Intelligence Solution Architecture"}
 ]
 
-random.shuffle(QUESTIONS)
+#random.shuffle(QUESTIONS)
 
 def main():
     st.set_page_config(page_title="Trivia Game", layout="centered")
     st.markdown("""
         <style>
-            body { background-color: #6699cc; color: white; font-family: Arial, sans-serif; }
-            .title { text-align: center; color: #FFD700; font-size: 40px; font-weight: bold; padding: 20px; }
-            .question { text-align: center; color: #FFA500; font-size: 24px; font-weight: bold; padding: 15px; background-color: #222; border-radius: 10px; padding: 10px; }
-            .option-button { background-color: #444; color: white; font-size: 20px; padding: 15px; margin: 5px; border-radius: 15px; width: 100%; text-align: center; transition: 0.3s; border: 2px solid #888; }
-            .option-button:hover { background-color: #00CC66; color: white; transform: scale(1.05); }
-            .score { text-align: center; color: #FFD700; font-size: 24px; padding: 10px; }
-            .timer { text-align: center; color: #FF0000; font-size: 20px; font-weight: bold; }
+            body { background-color: #1E1E1E; color: white; font-family: Arial, sans-serif; }
+            .title { text-align: center; color: #FFD700; font-size: 45px; font-weight: bold; padding: 20px; }
+            .question { text-align: center; color: #FFA500; font-size: 26px; font-weight: bold; padding: 15px; background-color: #333; border-radius: 15px; padding: 15px; }
+            .option-button { background-color: #555; color: white; font-size: 22px; padding: 15px; margin: 8px; border-radius: 20px; width: 100%; text-align: center; transition: 0.3s; border: 2px solid #999; cursor: pointer; }
+            .option-button:hover { background-color: #00CC66; color: white; transform: scale(1.07); }
+            .score { text-align: center; color: #FFD700; font-size: 28px; padding: 12px; }
+            .timer { text-align: center; color: #FF4444; font-size: 22px; font-weight: bold; }
             .correct { background-color: #4CAF50 !important; color: white !important; }
             .wrong { background-color: #FF5733 !important; color: white !important; }
         </style>
     """, unsafe_allow_html=True)
 
-    st.markdown("<div class='title'>🎉 Welcome to Trivia Game! 🎉</div>", unsafe_allow_html=True)
+    st.markdown("<div class='title'>🔥 Ultimate Trivia Challenge! 🔥</div>", unsafe_allow_html=True)
     
-    username = st.text_input("Enter your name to start:")
+    username = st.text_input("Enter your name to start:", placeholder="Type your name here...")
     if not username:
         st.warning("Please enter your name to begin.")
         st.stop()
@@ -94,8 +94,8 @@ def main():
                 st.session_state.user_sessions[username] = user_data
                 st.rerun()
     else:
-        st.success(f"Game Over! {username}, you scored {'⭐' * user_data['score']}!")
-        if st.button("Play Again"):
+        st.success(f"🎉 Game Over! {username}, you scored {'⭐' * user_data['score']}! 🎉")
+        if st.button("🔄 Play Again"):
             del st.session_state.user_sessions[username]
             st.rerun()
 
