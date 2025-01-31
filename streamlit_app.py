@@ -49,17 +49,26 @@ def main():
             'score': 0,
             'selected_option': None,
             'show_answer': False,
-            'time_left': 60
+            'time_left': 60,
+            'start_time': time.time()
         }
 
     user_data = st.session_state.user_sessions[username]
+    elapsed_time = int(time.time() - user_data['start_time'])
+    user_data['time_left'] = max(60 - elapsed_time, 0)
+    
     st.markdown(f"<div class='score'>Score: {'⭐' * user_data['score']}</div>", unsafe_allow_html=True)
     
     col1, col2 = st.columns([3, 1])
     with col2:
         st.markdown(f"<div class='timer'>⏳ Time Left: {user_data['time_left']} sec</div>", unsafe_allow_html=True)
     
-    if user_data['current_question'] < len(QUESTIONS):
+    if user_data['time_left'] == 0:
+        st.error("⏳ Time's up! Game Over!")
+        if st.button("🔄 Play Again"):
+            del st.session_state.user_sessions[username]
+            st.rerun()
+    elif user_data['current_question'] < len(QUESTIONS):
         question_data = QUESTIONS[user_data['current_question']]
         st.markdown(f"<div class='question'>{user_data['current_question'] + 1}. {question_data['question']}</div>", unsafe_allow_html=True)
 
