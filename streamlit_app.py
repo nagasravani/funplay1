@@ -21,10 +21,10 @@ def main():
     st.set_page_config(page_title="Trivia Game", layout="centered")
     st.markdown("""
         <style>
-            body { background-color: #1e1e2f; color: white; font-family: Arial, sans-serif; }
+            body { background-color: #121212; color: white; font-family: Arial, sans-serif; }
             .title { text-align: center; color: #FFD700; font-size: 40px; font-weight: bold; padding: 20px; }
-            .question { text-align: center; color: #FFA500; font-size: 24px; font-weight: bold; padding: 15px; }
-            .option-button { background-color: #282c34; color: white; font-size: 20px; padding: 15px; margin: 5px; border-radius: 15px; width: 100%; text-align: center; transition: 0.3s; border: 2px solid white; }
+            .question { text-align: center; color: #FFA500; font-size: 24px; font-weight: bold; padding: 15px; background-color: #222; border-radius: 10px; padding: 10px; }
+            .option-button { background-color: #444; color: white; font-size: 20px; padding: 15px; margin: 5px; border-radius: 15px; width: 100%; text-align: center; transition: 0.3s; border: 2px solid #888; }
             .option-button:hover { background-color: #00CC66; color: white; transform: scale(1.05); }
             .score { text-align: center; color: #FFD700; font-size: 24px; padding: 10px; }
             .timer { text-align: center; color: #FF0000; font-size: 20px; font-weight: bold; }
