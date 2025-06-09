@@ -3,15 +3,15 @@ import time
 import random
 # Define trivia questions and answers
 QUESTIONS = [
-   {"question": "D-SNP stands for", "options": ["Dual Super Number Plans", "Dual Special Needs Programs", "Dual Eligible Specific Need Plan", "Dual Eligible Special Needs Plans"], "answer": "Dual Eligible Special Needs Plans"},
+  {"question": "D-SNP stands for", "options": ["Dual Super Number Plans", "Dual Special Needs Programs", "Dual Eligible Specific Need Plan", "Dual Eligible Special Needs Plans"], "answer": "Dual Eligible Special Needs Plans"},
     {"question": "SDOH stands for", "options": ["Society Determinants of Humans", "Same Determinants of Health", "Social Determinants of Health", "Social Dual of Health"], "answer": "Social Determinants of Health"},
     {"question": "HEDIS stands for", "options": ["Healthcare Effectiveness Data and Information Set", "Health Enumerate Data and Intelligence Set", "Human Effectiveness Device and Information Set", "Healthcare Efficient Data and Information Source"], "answer": "Healthcare Effectiveness Data and Information Set"},
     {"question": "CAHPS stands for", "options": ["Continued Assessment of Health Providers and Sources", "Consumer Assessment of Healthcare Providers and Systems", "Consumer Arrival of Health Providers and Sources", "Count Assessment of Healthcare People and Systems"], "answer": "Consumer Assessment of Healthcare Providers and Systems"},
     {"question": "HNA stands for", "options": ["Health Numeric Assessment", "Health Needs Assessment", "Health Nature Assessment", "Health Needs Assignment"], "answer": "Health Needs Assessment"},
     {"question": "HIPAA stands for", "options": ["Health Insure Portability and Arrival Act", "Health Intelligence Profitability and Accountability Act", "Health Insurance Portability and Accountability Act", "Health Intelligence Portability and Assessment Act"], "answer": "Health Insurance Portability and Accountability Act"},
     {"question": "PHI stands for", "options": ["Permanent Health Insurance", "Protected Health Information", "Protected Health Insurance", "Protected Human Information"], "answer": "Protected Health Information"},
-    {"question": "SDOH stands for", "options": ["Simple Sign On", "Sample Sign On", "Single Sign One", "Single Sign On"], "answer": "Single Sign On"},
-    {"question": "LHPC stands for", "options": ["Interesting Document Analysis", "Intelligent Document Automation", "Inverse Document Analysis", "Intelligent Diverse Automation"], "answer": "Intelligent Document Automation"},
+    {"question": "SDOH stands for", "options": ["Social Determinants of Health", "Social Determinants of Humans", "Semi Determinants of Health", "Social Doers of Health"], "answer": "Social Determinants of Health"},
+    {"question": "LHPC stands for", "options": ["Local Health Programs of California", "Local Health Plans of California", "Life Health Plans of California", "Live Health Plans of California"], "answer": "Local Health Plans of California"},
     {"question": "CMS stands for", "options": ["Centers for Medicare & Medicaid Services", "Centers for Medicare & Medicaid Supplies", "Community for Medicare & Medicaid Services", "Centers for Medicare & Medicaid Standards"], "answer": "Centers for Medicare & Medicaid Services"}
 ]
 
