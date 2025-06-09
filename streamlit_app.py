@@ -3,16 +3,16 @@ import time
 import random
 # Define trivia questions and answers
 QUESTIONS = [
-    {"question": "URL stands for", "options": ["Unit Resource Load", "Uniform Read Locator", "Uniform Resource Locator", "Unit Resource Locator"], "answer": "Uniform Resource Locator"},
-    {"question": "IVR stands for", "options": ["Interest Voice Record", "Interactive Voice Response", "Interactive Voice Record", "Interesting Voice Report"], "answer": "Interactive Voice Response"},
-    {"question": "POD stands for", "options": ["Product Oriented Delivery", "Product Oriented Department", "Primary Oriented Device", "Product Oriented Development"], "answer": "Product Oriented Delivery"},
-    {"question": "RCA stands for", "options": ["Route Cause Anomaly", "Random Care Analysis", "Root Cause Analysis", "Random Cause Analysis"], "answer": "Root Cause Analysis"},
-    {"question": "MVP stands for", "options": ["Minimum Viable Product", "Maximum Viable Product", "Minimum Visible Product", "Minimum Variable Price"], "answer": "Minimum Viable Product"},
-    {"question": "PDI stands for", "options": ["Price Demand Id", "Product Demand Ideas", "Product Diverse Ideas", "Product Discovery Ideas"], "answer": "Product Discovery Ideas"},
-    {"question": "KPI stands for", "options": ["Key Program Indicator", "Key Progress Indicator", "Key Performance Indicator", "Key Preference Indicator"], "answer": "Key Performance Indicator"},
-    {"question": "SSO stands for", "options": ["Simple Sign On", "Sample Sign On", "Single Sign One", "Single Sign On"], "answer": "Single Sign On"},
-    {"question": "IDA stands for", "options": ["Interesting Document Analysis", "Intelligent Document Automation", "Inverse Document Analysis", "Intelligent Diverse Automation"], "answer": "Intelligent Document Automation"},
-    {"question": "DISA stands for", "options": ["Dormant Intelligence Switch Architecture", "Device Intelligence Service Architecture", "Document Intelligence Solution Architecture", "Document Intelligence Solution Analysis"], "answer": "Document Intelligence Solution Architecture"}
+   {"question": "D-SNP stands for", "options": ["Dual Super Number Plans", "Dual Special Needs Programs", "Dual Eligible Specific Need Plan", "Dual Eligible Special Needs Plans"], "answer": "Dual Eligible Special Needs Plans"},
+    {"question": "SDOH stands for", "options": ["Society Determinants of Humans", "Same Determinants of Health", "Social Determinants of Health", "Social Dual of Health"], "answer": "Social Determinants of Health"},
+    {"question": "HEDIS stands for", "options": ["Healthcare Effectiveness Data and Information Set", "Health Enumerate Data and Intelligence Set", "Human Effectiveness Device and Information Set", "Healthcare Efficient Data and Information Source"], "answer": "Healthcare Effectiveness Data and Information Set"},
+    {"question": "CAHPS stands for", "options": ["Continued Assessment of Health Providers and Sources", "Consumer Assessment of Healthcare Providers and Systems", "Consumer Arrival of Health Providers and Sources", "Count Assessment of Healthcare People and Systems"], "answer": "Consumer Assessment of Healthcare Providers and Systems"},
+    {"question": "HNA stands for", "options": ["Health Numeric Assessment", "Health Needs Assessment", "Health Nature Assessment", "Health Needs Assignment"], "answer": "Health Needs Assessment"},
+    {"question": "HIPAA stands for", "options": ["Health Insure Portability and Arrival Act", "Health Intelligence Profitability and Accountability Act", "Health Insurance Portability and Accountability Act", "Health Intelligence Portability and Assessment Act"], "answer": "Health Insurance Portability and Accountability Act"},
+    {"question": "PHI stands for", "options": ["Permanent Health Insurance", "Protected Health Information", "Protected Health Insurance", "Protected Human Information"], "answer": "Protected Health Information"},
+    {"question": "SDOH stands for", "options": ["Simple Sign On", "Sample Sign On", "Single Sign One", "Single Sign On"], "answer": "Single Sign On"},
+    {"question": "LHPC stands for", "options": ["Interesting Document Analysis", "Intelligent Document Automation", "Inverse Document Analysis", "Intelligent Diverse Automation"], "answer": "Intelligent Document Automation"},
+    {"question": "CMS stands for", "options": ["Centers for Medicare & Medicaid Services", "Centers for Medicare & Medicaid Supplies", "Community for Medicare & Medicaid Services", "Centers for Medicare & Medicaid Standards"], "answer": "Centers for Medicare & Medicaid Services"}
 ]
 
 #random.shuffle(QUESTIONS)
