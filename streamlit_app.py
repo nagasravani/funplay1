@@ -12,6 +12,8 @@ QUESTIONS = [
     {"question": "PHI stands for", "options": ["Permanent Health Insurance", "Protected Health Information", "Protected Health Insurance", "Protected Human Information"], "answer": "Protected Health Information"},
     {"question": "EMR stands for", "options": ["Essential Medical Receipt", "Electronic Medical Record", "Essential Medical Record", "Electronic Medical Receipt"], "answer": "Electronic Medical Record"},
     {"question": "LHPC stands for", "options": ["Local Health Programs of California", "Local Health Plans of California", "Life Health Plans of California", "Live Health Plans of California"], "answer": "Local Health Plans of California"},
+    {"question": "PPO stands for", "options": ["Primary Provider Organization", "Preferred Provider Organization", "Preferred Profit Organization", "Primary Provider Organization"], "answer": "Preferred Provider Organization"},
+    {"question": "ACA stands for", "options": ["Adjust Care Act", "Affordable Communication Act", "Affordable Care Act", "Affordable Cost Act"], "answer": "Affordable Care Act"},
     {"question": "CMS stands for", "options": ["Centers for Medicare & Medicaid Services", "Centers for Medicare & Medicaid Supplies", "Community for Medicare & Medicaid Services", "Centers for Medicare & Medicaid Standards"], "answer": "Centers for Medicare & Medicaid Services"}
 ]
 
